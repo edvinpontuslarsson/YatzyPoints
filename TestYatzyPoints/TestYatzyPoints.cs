@@ -1,6 +1,6 @@
-using YatzyPoints;
-
 namespace TestYatzyPoints;
+
+using YatzyPoints;
 
 [TestClass]
 public class TestYatzyPoints
@@ -8,7 +8,7 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestPingPongs()
     {
-        string result = YatzyPoints.YatzyPoints.ping();
+        string result = YatzyPoengberegning.ping();
         Assert.AreEqual(result, "pong");
         Assert.AreNotEqual(result, "random");
     }
