@@ -33,6 +33,7 @@ public class DevYatzyPoints
     {
         Enum.TryParse(category.ToLower(), out Category enumCategory);
 
+        // removes any whitespaces
         eyes = Regex.Replace(eyes, @"\s+", "");
 
         // TODO validate input
@@ -44,6 +45,9 @@ public class DevYatzyPoints
 
             case Category.two_pair:
                 return pointsForTwoPair(eyes);
+
+            case Category.three_of_a_kind:
+                return pointsForThreeOfAKind(eyes);
 
             case Category.ones:
             case Category.twos:
@@ -92,9 +96,19 @@ public class DevYatzyPoints
         return sumOfPairs;
     }
 
-    // TODO make frequency table, see my mode solution
+    private static int pointsForThreeOfAKind(string eyes)
+    {
+        Dictionary<int, int> frequencyTable = FrequencyTable(eyes);
+        
+        // if any occurs 3 or more times
+        // return that multiplied with 3
+        foreach (KeyValuePair<int, int> keyValue in frequencyTable)
+        {
+            if (keyValue.Value >= 3) return keyValue.Key * 3;
+        }
 
-    // TODO2 if any occurs 3 or more times
+        return 0;
+    }
 
     private static List<int> Duplicates(string eyes)
     {

@@ -59,4 +59,16 @@ public class TestYatzyPoints
         Assert.AreEqual(resultB, 10);
         Assert.AreEqual(resultC, 0);
     }
+
+    [TestMethod]
+    public void TestThreeOfAKind()
+    {
+        int resultA = DevYatzyPoints.points("5, 1, 5, 2, 5", "three_of_a_kind"); // 15
+        int resultB = DevYatzyPoints.points("5, 5, 5, 2, 5", "three_of_a_kind"); // still 15
+        int resultC = DevYatzyPoints.points("5,5,2,2,1", "three_of_a_kind");
+
+        Assert.AreEqual(resultA, 15);
+        Assert.AreEqual(resultB, 15);
+        Assert.AreEqual(resultC, 0);
+    }
 }
