@@ -1,11 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace YatzyPoints;
+namespace DevYatzyPoints;
 
-public static class YatzyPoengberegning
+public class DevYatzyPoints
 {
-    public static string ping() => "pong";
-
     // TODO OK, start with just counting ones
 
     // instruction is string with eyes
