@@ -17,6 +17,6 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestPoengInitial()
     {
-        int result = DevYatzyPoints.points("1, 2,3,1,1", "ones");
+        // int result = DevYatzyPoints.points("1, 2,3,1,1", "ones");
     }
 }

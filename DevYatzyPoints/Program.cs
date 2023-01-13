@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        int result = DevYatzyPoints.points("1, 2,3,1,1", "ones");
+        int result = DevYatzyPoints.points("5, 2, 4, 4, 1", "FouRs");
         Console.WriteLine(result);
     }
 }

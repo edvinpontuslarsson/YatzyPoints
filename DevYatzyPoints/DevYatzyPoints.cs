@@ -20,12 +20,25 @@ public class DevYatzyPoints
 
     // TODO remove whitespaces, split by ","
 
+    enum Category
+    {
+        ones = 1,
+        twos,
+        threes,
+        fours,
+        fives,
+        sixes,
+    }
+
     public static int points(string eyes, string category)
     {
-        // OK just ones, ignore category first
+        Enum.TryParse(category.ToLower(), out Category enumCategory);
 
-        int occuranceAmount = eyes.Count(eye => eye == '1');
+        int searchValue = (int) enumCategory;
+        char search = char.Parse(searchValue.ToString());
 
-        return occuranceAmount;
+        int occuranceAmount = eyes.Count(eye => eye == search);
+
+        return occuranceAmount * searchValue;
     }
 }
