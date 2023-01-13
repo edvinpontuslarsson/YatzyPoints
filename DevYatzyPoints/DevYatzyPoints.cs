@@ -33,10 +33,12 @@ public class DevYatzyPoints
     {
         Enum.TryParse(category.ToLower(), out Category enumCategory);
 
+        // TODO validate input
+
         switch(enumCategory)
         {
             case Category.pair:
-                return 0;
+                return pointsForPair(eyes);
 
             case Category.ones:
             case Category.twos:
@@ -55,8 +57,43 @@ public class DevYatzyPoints
         int categoryValue = (int)enumCategory;
         char search = char.Parse(categoryValue.ToString());
 
-        int occuranceAmount = eyes.Count(eye => eye == search);
+        int occuranceAmount = eyes.Count(character => character == search);
 
         return occuranceAmount * categoryValue;
+    }
+
+    private static int pointsForPair(string eyes)
+    {
+        // 2,2,5,5,5
+
+        List<int> duplicates = Duplicates(eyes);
+
+        return 0;
+    }
+
+    private static List<int> Duplicates(string eyes)
+    {
+        List<int> duplicates = new List<int>();
+
+        string eyesNoWhiteSpace = Regex.Replace(eyes, @"\s+", "");
+        string[] justEyes = eyesNoWhiteSpace.Split(',');
+
+        foreach (string character in justEyes) 
+        {
+            int value = int.Parse(character);
+
+            if (duplicates.Contains(value)) continue;
+
+            int indexOfFirstOccurance = eyes.IndexOf(character);
+            int indexOfLastOccurance = eyes.LastIndexOf(character);
+
+            // if first and last index isn't the same, it occurs more than once
+            if (indexOfFirstOccurance != indexOfLastOccurance) 
+            {
+                duplicates.Add(value);
+            }
+        }
+
+        return duplicates;
     }
 }
