@@ -35,6 +35,12 @@ public class DevYatzyPoints
         four = 4,
     }
 
+    enum Straight
+    {
+        small = 15,
+        big = 20,
+    }
+
     public static int points(string eyes, string category)
     {
         Enum.TryParse(category.ToLower(), out Category enumCategory);
@@ -46,6 +52,14 @@ public class DevYatzyPoints
 
         switch (enumCategory)
         {
+            case Category.ones:
+            case Category.twos:
+            case Category.threes:
+            case Category.fours:
+            case Category.fives:
+            case Category.sixes:
+                return pointsForOnesToSixes(eyes, enumCategory);
+
             case Category.pair:
                 return pointsForPair(eyes);
 
@@ -58,13 +72,11 @@ public class DevYatzyPoints
             case Category.four_of_a_kind:
                 return pointsForXOfAKind(eyes, XOfAKind.four);
 
-            case Category.ones:
-            case Category.twos:
-            case Category.threes:
-            case Category.fours:
-            case Category.fives:
-            case Category.sixes:
-                return pointsForOnesToSixes(eyes, enumCategory);
+            case Category.small_straight:
+                return pointsForStraight(eyes, Straight.small);
+
+            case Category.big_straight:
+                return pointsForStraight(eyes, Straight.big);
         }
 
         return pointsForOnesToSixes(eyes, enumCategory);
@@ -120,6 +132,23 @@ public class DevYatzyPoints
         }
 
         return 0;
+    }
+
+    private static int pointsForStraight(string eyes, Straight straight)
+    {
+        int sum = 0;
+
+        string[] justEyes = eyes.Split(',');
+
+        foreach (string eye in justEyes)
+        {
+            sum += int.Parse(eye);
+        }
+
+        // straight is 15 for small, 20 for big
+        if (sum != (int)straight) return 0;
+
+        return sum;
     }
 
     private static List<int> Duplicates(string eyes)

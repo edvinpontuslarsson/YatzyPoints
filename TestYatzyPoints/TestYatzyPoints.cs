@@ -83,4 +83,26 @@ public class TestYatzyPoints
         Assert.AreEqual(resultB, 0);
         Assert.AreEqual(resultC, 0);
     }
+
+    [TestMethod]
+    public void TestStraight()
+    {
+        int smallStraight = DevYatzyPoints.points("1,2,3,4,5", "small_straight");
+        int bigStraight = DevYatzyPoints.points("2,3,4,5,6", "big_straight");
+
+        int wantsBigStraightButIsSmall = DevYatzyPoints.points("1,2,3,4,5", "big_straight");
+        int wantsSmallStraightButIsBig = DevYatzyPoints.points("2,3,4,5,6", "small_straight");
+
+        int notStraight = DevYatzyPoints.points("1,2,3,4,6", "small_straight");
+        int notStraightBig = DevYatzyPoints.points("2,3,5,5,6", "big_straight");
+
+        Assert.AreEqual(smallStraight, 15);
+        Assert.AreEqual(bigStraight, 20);
+
+        Assert.AreEqual(wantsBigStraightButIsSmall, 0);
+        Assert.AreEqual(wantsSmallStraightButIsBig, 0);
+
+        Assert.AreEqual(notStraight, 0);
+        Assert.AreEqual(notStraightBig, 0);
+    }
 }
