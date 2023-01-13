@@ -68,7 +68,11 @@ public class DevYatzyPoints
     private static int pointsForPair(string eyes)
     {
         List<int> duplicates = Duplicates(eyes);
+
+        if (duplicates.Count == 0) return 0;
+
         int maxValue = duplicates.Max();
+
         return maxValue * 2;
     }
 
