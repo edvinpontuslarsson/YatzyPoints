@@ -23,11 +23,11 @@ public class DevYatzyPoints
     {
         Enum.TryParse(category.ToLower(), out Category enumCategory);
 
-        int searchValue = (int) enumCategory;
-        char search = char.Parse(searchValue.ToString());
+        int categoryValue = (int) enumCategory;
+        char search = char.Parse(categoryValue.ToString());
 
         int occuranceAmount = eyes.Count(eye => eye == search);
 
-        return occuranceAmount * searchValue;
+        return occuranceAmount * categoryValue;
     }
 }
