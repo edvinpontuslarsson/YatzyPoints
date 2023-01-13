@@ -120,6 +120,27 @@ public class DevYatzyPoints
 
         return duplicates;
     }
+    
+    private static Dictionary<int, int> FrequencyTable(string eyes)
+    {
+        string[] justEyes = eyes.Split(',');
 
-    // private static Dictionary<int, int> FrequencyTable()
+        Dictionary<int, int> frequencyTable = new Dictionary<int, int>();
+
+        foreach (string eye in justEyes)
+        {
+            int numericEye = int.Parse(eye);
+
+            if (frequencyTable.ContainsKey(numericEye))
+            {
+                frequencyTable[numericEye] += 1;
+            }
+            else
+            {
+                frequencyTable[numericEye] = 1;
+            }
+        }
+
+        return frequencyTable;
+    }
 }
