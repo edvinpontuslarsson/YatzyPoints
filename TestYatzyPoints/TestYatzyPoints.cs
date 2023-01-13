@@ -41,10 +41,22 @@ public class TestYatzyPoints
     {
         int resultA = DevYatzyPoints.points("2,2,3,3,3", "pair");
         int resultB = DevYatzyPoints.points("3,4,4,4,6", "pair");
-        int resultC = DevYatzyPoints.points("0,0,0,0,0", "pair");
+        int resultC = DevYatzyPoints.points("1,2,3,4,5", "pair");
 
         Assert.AreEqual(resultA, 6);
         Assert.AreEqual(resultB, 8);
+        Assert.AreEqual(resultC, 0);
+    }
+
+    [TestMethod]
+    public void TestTwoPair()
+    {
+        int resultA = DevYatzyPoints.points("3, 3, 1, 5, 5", "two_pair"); // 16
+        int resultB = DevYatzyPoints.points("4, 5, 1, 5, 3", "two_pair");
+        int resultC = DevYatzyPoints.points("1,2,3,4,5", "two_pair");
+
+        Assert.AreEqual(resultA, 16);
+        Assert.AreEqual(resultB, 10);
         Assert.AreEqual(resultC, 0);
     }
 }

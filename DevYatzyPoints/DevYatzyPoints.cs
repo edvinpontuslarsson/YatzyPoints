@@ -40,6 +40,9 @@ public class DevYatzyPoints
             case Category.pair:
                 return pointsForPair(eyes);
 
+            case Category.two_pair:
+                return pointsForTwoPair(eyes);
+
             case Category.ones:
             case Category.twos:
             case Category.threes:
@@ -67,6 +70,20 @@ public class DevYatzyPoints
         List<int> duplicates = Duplicates(eyes);
         int maxValue = duplicates.Max();
         return maxValue * 2;
+    }
+
+    private static int pointsForTwoPair(string eyes)
+    {
+        List<int> duplicates = Duplicates(eyes);
+
+        int sumOfPairs = 0;
+
+        foreach (int pair in duplicates) 
+        {
+            sumOfPairs += pair * 2;
+        }
+
+        return sumOfPairs;
     }
 
     private static List<int> Duplicates(string eyes)
