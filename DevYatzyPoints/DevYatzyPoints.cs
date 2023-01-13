@@ -20,14 +20,12 @@ public class DevYatzyPoints
 
     // TODO remove whitespaces, split by ","
 
-    public static int points(string eyesInString, string category)
+    public static int points(string eyes, string category)
     {
         // OK just ones, ignore category first
 
-        string eyesInStringNoSpaces = Regex.Replace(eyesInString, @"\s+", "");
+        int occuranceAmount = eyes.Count(eye => eye == '1');
 
-        string[] eyes = eyesInStringNoSpaces.Split(',');
-
-        return eyes.Length;
+        return occuranceAmount;
     }
 }
