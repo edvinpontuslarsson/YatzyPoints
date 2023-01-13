@@ -29,6 +29,12 @@ public class DevYatzyPoints
         yatzy
     }
 
+    enum XOfAKind
+    {
+        three = 3,
+        four = 4,
+    }
+
     public static int points(string eyes, string category)
     {
         Enum.TryParse(category.ToLower(), out Category enumCategory);
@@ -47,7 +53,10 @@ public class DevYatzyPoints
                 return pointsForTwoPair(eyes);
 
             case Category.three_of_a_kind:
-                return pointsForThreeOfAKind(eyes);
+                return pointsForXOfAKind(eyes, XOfAKind.three);
+
+            case Category.four_of_a_kind:
+                return pointsForXOfAKind(eyes, XOfAKind.four);
 
             case Category.ones:
             case Category.twos:
@@ -96,15 +105,18 @@ public class DevYatzyPoints
         return sumOfPairs;
     }
 
-    private static int pointsForThreeOfAKind(string eyes)
+    private static int pointsForXOfAKind(string eyes, XOfAKind xOfAKind)
     {
+        // x is 3 or 4
+        int x = (int)xOfAKind;
+
         Dictionary<int, int> frequencyTable = FrequencyTable(eyes);
         
-        // if any occurs 3 or more times
-        // return that multiplied with 3
+        // if any occurs x or more times
+        // return that multiplied with x
         foreach (KeyValuePair<int, int> keyValue in frequencyTable)
         {
-            if (keyValue.Value >= 3) return keyValue.Key * 3;
+            if (keyValue.Value >= x) return keyValue.Key * x;
         }
 
         return 0;
