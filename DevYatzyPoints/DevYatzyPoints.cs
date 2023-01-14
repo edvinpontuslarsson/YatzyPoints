@@ -60,10 +60,10 @@ public class DevYatzyPoints
             case Category.sixes:
                 return pointsForOnesToSixes(eyes, enumCategory);
 
-            case Category.pair: 
+            case Category.pair:
                 return pointsForPair(eyes);
 
-            case Category.two_pair: 
+            case Category.two_pair:
                 return pointsForTwoPair(eyes);
 
             case Category.three_of_a_kind:
@@ -76,10 +76,10 @@ public class DevYatzyPoints
             case Category.big_straight:
                 return pointsForStraight(eyes, Straight.big);
 
-            case Category.full_house: 
+            case Category.full_house:
                 return pointsForFullHouse(eyes);
 
-            case Category.chance: 
+            case Category.chance:
                 return pointsForChance(eyes);
 
             // TODO Yatzy just make sure all the same then 50 else 0
