@@ -79,12 +79,15 @@ public class DevYatzyPoints
             case Category.full_house:
                 return pointsForFullHouse(eyes);
 
-            // TODO sjanse/chance is very similar to my straight, but simpler
-            // TODO Yatzy just make sure all the same then 50 else 0
-        }
+            case Category.chance:
+                return pointsForChance(eyes);
 
-        // TODO throw err instead
-        return pointsForOnesToSixes(eyes, enumCategory);
+            case Category.yatzy:
+                return pointsForYatzy(eyes);
+
+            default:
+                throw new Exception("Category string is not valid");
+        }
     }
 
     private static int pointsForOnesToSixes(string eyes, Category enumCategory)
@@ -141,14 +144,7 @@ public class DevYatzyPoints
 
     private static int pointsForStraight(string eyes, Straight straight)
     {
-        int sum = 0;
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string eye in justEyes)
-        {
-            sum += int.Parse(eye);
-        }
+        int sum = SumOfEyes(eyes);
 
         // straight is 15 for small, 20 for big
         if (sum != (int)straight) return 0;
@@ -170,6 +166,35 @@ public class DevYatzyPoints
         foreach (KeyValuePair<int, int> keyValue in frequencyTable)
         {
             sum += keyValue.Key * keyValue.Value;
+        }
+
+        return sum;
+    }
+
+    private static int pointsForChance(string eyes) => SumOfEyes(eyes);
+
+    private static int pointsForYatzy(string eyes)
+    {
+        string[] justEyes = eyes.Split(',');
+        string firstEye = justEyes[0];
+        bool allSame = justEyes
+            .Skip(1)
+            .All(eye => string.Equals(firstEye, eye));
+
+        if (!allSame) return 0;
+
+        return 50;
+    }
+
+    private static int SumOfEyes(string eyes)
+    {
+        int sum = 0;
+
+        string[] justEyes = eyes.Split(',');
+
+        foreach (string eye in justEyes)
+        {
+            sum += int.Parse(eye);
         }
 
         return sum;
