@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -49,7 +50,20 @@ public class DevYatzyPoints
         // for category in catetegories - excludeCategories:
         //     points(eyes, category)
 
-        return Category.big_straight;
+        foreach (int i in Enum.GetValues(typeof(Category)))
+        {
+            string categoryName = Enum.GetName(typeof(Category), i);
+            Category currentEnum = (Category)Enum.Parse(typeof(Category), categoryName);
+
+            // if (categoryName == null) throw new Exception();
+
+            if (excludeCategories.Contains(currentEnum))
+            {
+                continue;
+            }
+        }
+
+            return Category.big_straight;
     }
 
     public static int points(string eyes, string category)
