@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static DevYatzyPoints.DevYatzyPoints;
 
 namespace DevYatzyPoints;
 
@@ -47,23 +48,28 @@ public class DevYatzyPoints
         Category[] excludeCategories
     )
     {
-        // for category in catetegories - excludeCategories:
-        //     points(eyes, category)
-
-        foreach (int i in Enum.GetValues(typeof(Category)))
+        try
         {
-            string categoryName = Enum.GetName(typeof(Category), i);
-            Category currentEnum = (Category)Enum.Parse(typeof(Category), categoryName);
+            // for category in catetegories - excludeCategories:
+            //     points(eyes, category)
 
-            // if (categoryName == null) throw new Exception();
-
-            if (excludeCategories.Contains(currentEnum))
+            foreach (int i in Enum.GetValues(typeof(Category)))
             {
-                continue;
+                string? categoryName = Enum.GetName(typeof(Category), i);
+                Enum.TryParse(categoryName, out Category currentEnum);
+
+                if (excludeCategories.Contains(currentEnum))
+                {
+                    continue;
+                }
             }
-        }
 
             return Category.big_straight;
+        }
+        catch
+        {
+            throw new Exception("Please make sure input is valid");
+        }
     }
 
     public static int points(string eyes, string category)
