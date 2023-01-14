@@ -77,6 +77,10 @@ public class DevYatzyPoints
 
             case Category.big_straight:
                 return pointsForStraight(eyes, Straight.big);
+
+            // TODO fulll house, use frequencyTable again
+            // TODO sjanse/chance is very similar to my straight, but simpler
+            // TODO Yatzy just make sure all the same then 50 else 0
         }
 
         return pointsForOnesToSixes(eyes, enumCategory);
