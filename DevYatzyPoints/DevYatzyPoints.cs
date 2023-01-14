@@ -121,7 +121,7 @@ public class DevYatzyPoints
                 return pointsForYatzy(eyes);
 
             default:
-                throw new Exception("Category string is not valid");
+                throw new Exception("Please make sure input is valid");
         }
     }
 
