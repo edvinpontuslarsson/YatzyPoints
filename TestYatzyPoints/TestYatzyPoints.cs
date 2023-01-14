@@ -105,4 +105,16 @@ public class TestYatzyPoints
         Assert.AreEqual(notStraight, 0);
         Assert.AreEqual(notStraightBig, 0);
     }
+
+    [TestMethod]
+    public void TestFullHouse()
+    {
+        int resultA = DevYatzyPoints.points("2, 5, 5, 2, 2", "full_house"); // 16
+        int resultB = DevYatzyPoints.points("1, 1, 4, 3, 1", "full_house"); // 0
+        int resultC = DevYatzyPoints.points("2,2,5,5,6", "full_house"); // 0
+
+        Assert.AreEqual(resultA, 16);
+        Assert.AreEqual(resultB, 0);
+        Assert.AreEqual(resultC, 0);
+    }
 }

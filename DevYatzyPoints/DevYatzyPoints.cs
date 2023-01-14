@@ -68,21 +68,22 @@ public class DevYatzyPoints
 
             case Category.three_of_a_kind:
                 return pointsForXOfAKind(eyes, XOfAKind.three);
-
             case Category.four_of_a_kind:
                 return pointsForXOfAKind(eyes, XOfAKind.four);
 
             case Category.small_straight:
                 return pointsForStraight(eyes, Straight.small);
-
             case Category.big_straight:
                 return pointsForStraight(eyes, Straight.big);
 
-            // TODO fulll house, use frequencyTable again
+            case Category.full_house:
+                return pointsForFullHouse(eyes);
+
             // TODO sjanse/chance is very similar to my straight, but simpler
             // TODO Yatzy just make sure all the same then 50 else 0
         }
 
+        // TODO throw err instead
         return pointsForOnesToSixes(eyes, enumCategory);
     }
 
@@ -151,6 +152,25 @@ public class DevYatzyPoints
 
         // straight is 15 for small, 20 for big
         if (sum != (int)straight) return 0;
+
+        return sum;
+    }
+
+    private static int pointsForFullHouse(string eyes)
+    {
+        Dictionary<int, int> frequencyTable = FrequencyTable(eyes);
+
+        if (!frequencyTable.ContainsValue(3) || !frequencyTable.ContainsValue(2)) 
+        {
+            return 0;
+        }
+
+        int sum = 0;
+
+        foreach (KeyValuePair<int, int> keyValue in frequencyTable)
+        {
+            sum += keyValue.Key * keyValue.Value;
+        }
 
         return sum;
     }
