@@ -149,16 +149,20 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestWhichCategoryGivesMostPoints()
     {
-       Category shouldBeFives =WhichCategoryGivesMostPoints(
+        Dictionary<Category, int> shouldBeFives = CategoriesWithHighestPoints(
             "5,5,5,5,5",
-            newCategory[] {Category.yatzy }
+            new Category[] {Category.yatzy }
         );
 
-       Category shouldBeYatzy =CategoriesWithHighestPoints(
+        Dictionary<Category, int> shouldBeYatzy = CategoriesWithHighestPoints(
             "5,5,5,5,5"
         );
 
-        Assert.AreEqual(shouldBeFives, Category.fives);
-        Assert.AreEqual(shouldBeYatzy, Category.yatzy);
+        Assert.IsTrue(
+            shouldBeFives.ContainsKey(Category.fives) &&
+            shouldBeFives.ContainsKey(Category.chance) &&
+            shouldBeFives.All(item => item.Value == 25) &&
+            shouldBeFives.Count == 2
+        );
     }
 }
