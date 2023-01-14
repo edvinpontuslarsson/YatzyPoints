@@ -144,4 +144,10 @@ public class TestYatzyPoints
         Assert.AreEqual(resultC, 0);
         Assert.AreEqual(resultD, 0);
     }
+
+    [TestMethod]
+    public void TestWhichCategoryGivesMostPoints()
+    {
+        DevYatzyPoints.Category[] excludeCategories = Array.Empty<DevYatzyPoints.Category>();
+    }
 }
