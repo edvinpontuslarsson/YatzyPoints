@@ -60,10 +60,10 @@ public class DevYatzyPoints
             case Category.sixes:
                 return pointsForOnesToSixes(eyes, enumCategory);
 
-            case Category.pair:
+            case Category.pair: 
                 return pointsForPair(eyes);
 
-            case Category.two_pair:
+            case Category.two_pair: 
                 return pointsForTwoPair(eyes);
 
             case Category.three_of_a_kind:
@@ -76,10 +76,12 @@ public class DevYatzyPoints
             case Category.big_straight:
                 return pointsForStraight(eyes, Straight.big);
 
-            case Category.full_house:
+            case Category.full_house: 
                 return pointsForFullHouse(eyes);
 
-            // TODO sjanse/chance is very similar to my straight, but simpler
+            case Category.chance: 
+                return pointsForChance(eyes);
+
             // TODO Yatzy just make sure all the same then 50 else 0
         }
 
@@ -141,14 +143,7 @@ public class DevYatzyPoints
 
     private static int pointsForStraight(string eyes, Straight straight)
     {
-        int sum = 0;
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string eye in justEyes)
-        {
-            sum += int.Parse(eye);
-        }
+        int sum = SumOfEyes(eyes);
 
         // straight is 15 for small, 20 for big
         if (sum != (int)straight) return 0;
@@ -170,6 +165,22 @@ public class DevYatzyPoints
         foreach (KeyValuePair<int, int> keyValue in frequencyTable)
         {
             sum += keyValue.Key * keyValue.Value;
+        }
+
+        return sum;
+    }
+
+    private static int pointsForChance(string eyes) => SumOfEyes(eyes);
+
+    private static int SumOfEyes(string eyes)
+    {
+        int sum = 0;
+
+        string[] justEyes = eyes.Split(',');
+
+        foreach (string eye in justEyes)
+        {
+            sum += int.Parse(eye);
         }
 
         return sum;

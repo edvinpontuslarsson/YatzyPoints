@@ -117,4 +117,16 @@ public class TestYatzyPoints
         Assert.AreEqual(resultB, 0);
         Assert.AreEqual(resultC, 0);
     }
+
+    [TestMethod]
+    public void TestChance()
+    {
+        int resultA = DevYatzyPoints.points("4, 1, 3, 5, 5", "chance"); // 18
+        int resultB = DevYatzyPoints.points("1,2,3,4,5", "chance");
+        int resultC = DevYatzyPoints.points("2,3,4,5,6", "chance");
+
+        Assert.AreEqual(resultA, 18);
+        Assert.AreEqual(resultB, 15);
+        Assert.AreEqual(resultC, 20);
+    }
 }
