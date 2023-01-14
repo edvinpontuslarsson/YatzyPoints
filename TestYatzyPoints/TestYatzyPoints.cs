@@ -18,7 +18,7 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestPointsOnesToSixes()
     {
-        int one = DevYatzyPoints.Points("1, 2, 2, 2, 2",Category.ones);
+        int one = Points("1, 2, 2, 2, 2",Category.ones);
         int two = Points("2, 2, 1, 1, 1",Category.twos);
         int three = Points("3, 3, 3, 1, 1",Category.threes);
         int four = Points("4, 4, 4, 4, 1",Category.fours);
