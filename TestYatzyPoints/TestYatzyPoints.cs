@@ -157,6 +157,7 @@ public class TestYatzyPoints
             "5,5,5,5,5"
         );
 
-
+        Assert.AreEqual(shouldBeFives, DevYatzyPoints.Category.fives);
+        Assert.AreEqual(shouldBeYatzy, DevYatzyPoints.Category.yatzy);
     }
 }
