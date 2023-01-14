@@ -30,19 +30,19 @@ public class DevYatzyPoints
         yatzy
     }
 
-    enum XOfAKind
+    private enum XOfAKind
     {
         three = 3,
         four = 4,
     }
 
-    enum Straight
+    private enum Straight
     {
         small = 15,
         big = 20,
     }
 
-    public static Category WhichCategoryGivesMostPoints(
+    public static Dictionary<Category, int> CategoriesWithHighestPoints(
         string eyes, 
         Category[]? excludeCategories = null
     )
@@ -67,7 +67,11 @@ public class DevYatzyPoints
                 scoreTable.Add(currentCategory, currentPoints);
             }
 
-            return scoreTable.MaxBy(row => row.Value).Key;
+            int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
+
+            return scoreTable
+                .Where(pair => pair.Value == highestPoints)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
         catch
         {
