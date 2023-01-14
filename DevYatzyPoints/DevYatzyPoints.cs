@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Data;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DevYatzyPoints;
 
@@ -85,10 +80,6 @@ public class DevYatzyPoints
         eyes = Regex.Replace(eyes, @"\s+", "");
 
         // TODO validate input
-
-        // TODO use category enum not strings
-        // TODO I split eyes in almost all, do here instead
-        // functions can choose string or array
 
         switch (category)
         {
