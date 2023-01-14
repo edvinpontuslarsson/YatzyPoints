@@ -148,6 +148,15 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestWhichCategoryGivesMostPoints()
     {
-        DevYatzyPoints.Category[] excludeCategories = Array.Empty<DevYatzyPoints.Category>();
+        DevYatzyPoints.Category shouldBeFives = DevYatzyPoints.WhichCategoryGivesMostPoints(
+            "5,5,5,5,5",
+            new DevYatzyPoints.Category[] { DevYatzyPoints.Category.yatzy }
+        );
+
+        DevYatzyPoints.Category shouldBeYatzy = DevYatzyPoints.WhichCategoryGivesMostPoints(
+            "5,5,5,5,5"
+        );
+
+
     }
 }
