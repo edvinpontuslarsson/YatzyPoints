@@ -82,11 +82,12 @@ public class DevYatzyPoints
             case Category.chance:
                 return pointsForChance(eyes);
 
-            // TODO Yatzy just make sure all the same then 50 else 0
-        }
+            case Category.yatzy:
+                return pointsForYatzy(eyes);
 
-        // TODO throw err instead
-        return pointsForOnesToSixes(eyes, enumCategory);
+            default:
+                throw new Exception("Category string is not valid");
+        }
     }
 
     private static int pointsForOnesToSixes(string eyes, Category enumCategory)
@@ -171,6 +172,19 @@ public class DevYatzyPoints
     }
 
     private static int pointsForChance(string eyes) => SumOfEyes(eyes);
+
+    private static int pointsForYatzy(string eyes)
+    {
+        string[] justEyes = eyes.Split(',');
+        string firstEye = justEyes[0];
+        bool allSame = justEyes
+            .Skip(1)
+            .All(eye => string.Equals(firstEye, eye));
+
+        if (!allSame) return 0;
+
+        return 50;
+    }
 
     private static int SumOfEyes(string eyes)
     {
