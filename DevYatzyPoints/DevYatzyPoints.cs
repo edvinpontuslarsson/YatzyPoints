@@ -49,24 +49,22 @@ public class DevYatzyPoints
     {
         try
         {
-            // for category in catetegories - excludeCategories:
-            //     points(eyes, category)
-
             Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
 
             foreach (int i in Enum.GetValues(typeof(Category)))
             {
+                // to get currentCategory
                 string? categoryName = Enum.GetName(typeof(Category), i);
                 Enum.TryParse(categoryName, out Category currentCategory);
 
                 if (excludeCategories.Contains(currentCategory)) continue;
 
-                // TODO rename method to capitol Points, make it use category
+                int currentPoints = Points(eyes, currentCategory);
 
-                // scoreTable.Add(currentEnum, points);
+                scoreTable.Add(currentCategory, currentPoints);
             }
 
-            return Category.big_straight;
+            return scoreTable.MaxBy(row => row.Value).Key;
         }
         catch
         {
