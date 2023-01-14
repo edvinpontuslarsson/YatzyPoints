@@ -1,7 +1,6 @@
 namespace TestYatzyPoints;
 
 using YatzyPoints;
-using DevYatzyPoints;
 using static DevYatzyPoints.DevYatzyPoints;
 
 [TestClass]
@@ -149,7 +148,7 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestWhichCategoryGivesMostPoints()
     {
-        Dictionary<Category, int> shouldBeFives = CategoriesWithHighestPoints(
+        Dictionary<Category, int> shouldBeFivesAndChance = CategoriesWithHighestPoints(
             "5,5,5,5,5",
             new Category[] {Category.yatzy }
         );
@@ -158,17 +157,30 @@ public class TestYatzyPoints
             "5,5,5,5,5"
         );
 
+        Dictionary<Category, int> shouldBeOnesFoursAndFourOfAKind = CategoriesWithHighestPoints(
+            "4,1,1,1,1",
+            new Category[] { Category.chance }
+        );
+
         Assert.IsTrue(
-            shouldBeFives.ContainsKey(Category.fives) &&
-            shouldBeFives.ContainsKey(Category.chance) &&
-            shouldBeFives.All(item => item.Value == 25) &&
-            shouldBeFives.Count == 2
+            shouldBeFivesAndChance.ContainsKey(Category.fives) &&
+            shouldBeFivesAndChance.ContainsKey(Category.chance) &&
+            shouldBeFivesAndChance.All(item => item.Value == 25) &&
+            shouldBeFivesAndChance.Count == 2
         );
 
         Assert.IsTrue(
             shouldBeYatzy.ContainsKey(Category.yatzy) &&
             shouldBeYatzy.All(item => item.Value == 50) &&
             shouldBeYatzy.Count == 1
+        );
+
+        Assert.IsTrue(
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.ones) &&
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.fours) &&
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.four_of_a_kind) &&
+            shouldBeOnesFoursAndFourOfAKind.All(item => item.Value == 4) &&
+            shouldBeOnesFoursAndFourOfAKind.Count == 3
         );
     }
 }
