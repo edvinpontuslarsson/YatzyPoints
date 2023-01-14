@@ -1,10 +1,15 @@
-﻿namespace DevYatzyPoints;
+﻿using static DevYatzyPoints.DevYatzyPoints;
+
+namespace DevYatzyPoints;
 
 class Program
 {
     static void Main(string[] args)
     {
-        int result = DevYatzyPoints.points("2,6,5,5,5", "pair");
-        Console.WriteLine(result);
+        // TODO debug here and copy for test
+
+        Dictionary<Category, int> highest = CategoriesWithHighestPoints("1,1,1,1,4",
+            new Category[] { Category.chance });
+        Console.WriteLine(highest.ToString());
     }
 }

@@ -1,7 +1,7 @@
 namespace TestYatzyPoints;
 
 using YatzyPoints;
-using DevYatzyPoints;
+using static DevYatzyPoints.DevYatzyPoints;
 
 [TestClass]
 public class TestYatzyPoints
@@ -17,14 +17,14 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestPointsOnesToSixes()
     {
-        int one = DevYatzyPoints.points("1, 2, 2, 2, 2", "ones");
-        int two = DevYatzyPoints.points("2, 2, 1, 1, 1", "Twos");
-        int three = DevYatzyPoints.points("3, 3, 3, 1, 1", "threes");
-        int four = DevYatzyPoints.points("4, 4, 4, 4, 1", "Fours");
-        int five = DevYatzyPoints.points("5, 5, 5, 5, 5", "fives");
+        int one = Points("1, 2, 2, 2, 2", Category.ones);
+        int two = Points("2, 2, 1, 1, 1", Category.twos);
+        int three = Points("3, 3, 3, 1, 1", Category.threes);
+        int four = Points("4, 4, 4, 4, 1", Category.fours);
+        int five = Points("5, 5, 5, 5, 5", Category.fives);
         
-        int aSix = DevYatzyPoints.points("1, 1, 1, 1, 6", "Sixes");
-        int none = DevYatzyPoints.points("1, 1, 1, 1, 2", "Sixes");
+        int aSix = Points("1, 1, 1, 1, 6", Category.sixes);
+        int none = Points("1, 1, 1, 1, 2", Category.sixes);
 
         Assert.AreEqual(one, 1 * 1);
         Assert.AreEqual(two, 2 * 2);
@@ -39,9 +39,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestPair()
     {
-        int resultA = DevYatzyPoints.points("2,2,3,3,3", "pair");
-        int resultB = DevYatzyPoints.points("3,4,4,4,6", "pair");
-        int resultC = DevYatzyPoints.points("1,2,3,4,5", "pair");
+        int resultA = Points("2,2,3,3,3", Category.pair);
+        int resultB = Points("3,4,4,4,6", Category.pair);
+        int resultC = Points("1,2,3,4,5", Category.pair);
 
         Assert.AreEqual(resultA, 6);
         Assert.AreEqual(resultB, 8);
@@ -51,9 +51,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestTwoPair()
     {
-        int resultA = DevYatzyPoints.points("3, 3, 1, 5, 5", "two_pair"); // 16
-        int resultB = DevYatzyPoints.points("4, 5, 1, 5, 3", "two_pair");
-        int resultC = DevYatzyPoints.points("1,2,3,4,5", "two_pair");
+        int resultA = Points("3, 3, 1, 5, 5", Category.two_pair); // 16
+        int resultB = Points("4, 5, 1, 5, 3", Category.two_pair);
+        int resultC = Points("1,2,3,4,5", Category.two_pair);
 
         Assert.AreEqual(resultA, 16);
         Assert.AreEqual(resultB, 10);
@@ -63,9 +63,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestThreeOfAKind()
     {
-        int resultA = DevYatzyPoints.points("5, 1, 5, 2, 5", "three_of_a_kind"); // 15
-        int resultB = DevYatzyPoints.points("5, 5, 5, 2, 5", "three_of_a_kind"); // still 15
-        int resultC = DevYatzyPoints.points("5,5,2,2,1", "three_of_a_kind");
+        int resultA = Points("5, 1, 5, 2, 5", Category.three_of_a_kind); // 15
+        int resultB = Points("5, 5, 5, 2, 5", Category.three_of_a_kind); // still 15
+        int resultC = Points("5,5,2,2,1", Category.three_of_a_kind);
 
         Assert.AreEqual(resultA, 15);
         Assert.AreEqual(resultB, 15);
@@ -75,9 +75,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestFourOfAKind()
     {
-        int resultA = DevYatzyPoints.points("5,5, 2, 5,5", "four_of_a_kind"); // 20
-        int resultB = DevYatzyPoints.points("5, 1, 5, 2, 5", "four_of_a_kind"); // 0
-        int resultC = DevYatzyPoints.points("5,5,2,2,1", "four_of_a_kind");
+        int resultA = Points("5,5, 2, 5,5", Category.four_of_a_kind); // 20
+        int resultB = Points("5, 1, 5, 2, 5", Category.four_of_a_kind); // 0
+        int resultC = Points("5,5,2,2,1", Category.four_of_a_kind);
 
         Assert.AreEqual(resultA, 20);
         Assert.AreEqual(resultB, 0);
@@ -87,14 +87,14 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestStraight()
     {
-        int smallStraight = DevYatzyPoints.points("1,2,3,4,5", "small_straight");
-        int bigStraight = DevYatzyPoints.points("2,3,4,5,6", "big_straight");
+        int smallStraight = Points("1,2,3,4,5", Category.small_straight);
+        int bigStraight = Points("2,3,4,5,6", Category.big_straight);
 
-        int wantsBigStraightButIsSmall = DevYatzyPoints.points("1,2,3,4,5", "big_straight");
-        int wantsSmallStraightButIsBig = DevYatzyPoints.points("2,3,4,5,6", "small_straight");
+        int wantsBigStraightButIsSmall = Points("1,2,3,4,5", Category.big_straight);
+        int wantsSmallStraightButIsBig = Points("2,3,4,5,6", Category.small_straight);
 
-        int notStraight = DevYatzyPoints.points("1,2,3,4,6", "small_straight");
-        int notStraightBig = DevYatzyPoints.points("2,3,5,5,6", "big_straight");
+        int notStraight = Points("1,2,3,4,6", Category.small_straight);
+        int notStraightBig = Points("2,3,5,5,6", Category.big_straight);
 
         Assert.AreEqual(smallStraight, 15);
         Assert.AreEqual(bigStraight, 20);
@@ -109,9 +109,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestFullHouse()
     {
-        int resultA = DevYatzyPoints.points("2, 5, 5, 2, 2", "full_house"); // 16
-        int resultB = DevYatzyPoints.points("1, 1, 4, 3, 1", "full_house"); // 0
-        int resultC = DevYatzyPoints.points("2,2,5,5,6", "full_house"); // 0
+        int resultA = Points("2, 5, 5, 2, 2", Category.full_house); // 16
+        int resultB = Points("1, 1, 4, 3, 1", Category.full_house); // 0
+        int resultC = Points("2,2,5,5,6", Category.full_house); // 0
 
         Assert.AreEqual(resultA, 16);
         Assert.AreEqual(resultB, 0);
@@ -121,9 +121,9 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestChance()
     {
-        int resultA = DevYatzyPoints.points("4, 1, 3, 5, 5", "chance"); // 18
-        int resultB = DevYatzyPoints.points("1,2,3,4,5", "chance");
-        int resultC = DevYatzyPoints.points("2,3,4,5,6", "chance");
+        int resultA = Points("4, 1, 3, 5, 5", Category.chance); // 18
+        int resultB = Points("1,2,3,4,5", Category.chance);
+        int resultC = Points("2,3,4,5,6", Category.chance);
 
         Assert.AreEqual(resultA, 18);
         Assert.AreEqual(resultB, 15);
@@ -133,15 +133,54 @@ public class TestYatzyPoints
     [TestMethod]
     public void TestYatzy()
     {
-        int resultA = DevYatzyPoints.points("3, 3, 3, 3, 3", "yatzy");
-        int resultB = DevYatzyPoints.points("4, 4, 4, 4, 4", "yatzy");
+        int resultA = Points("3, 3, 3, 3, 3", Category.yatzy);
+        int resultB = Points("4, 4, 4, 4, 4", Category.yatzy);
         
-        int resultC = DevYatzyPoints.points("4, 4, 4, 4, 5", "yatzy");
-        int resultD = DevYatzyPoints.points("5, 4, 4, 4, 4", "yatzy");
+        int resultC = Points("4, 4, 4, 4, 5", Category.yatzy);
+        int resultD = Points("5, 4, 4, 4, 4", Category.yatzy);
 
         Assert.AreEqual(resultA, 50);
         Assert.AreEqual(resultB, 50);
         Assert.AreEqual(resultC, 0);
         Assert.AreEqual(resultD, 0);
+    }
+
+    [TestMethod]
+    public void TestWhichCategoryGivesMostPoints()
+    {
+        Dictionary<Category, int> shouldBeFivesAndChance = CategoriesWithHighestPoints(
+            "5,5,5,5,5",
+            new Category[] {Category.yatzy }
+        );
+
+        Dictionary<Category, int> shouldBeYatzy = CategoriesWithHighestPoints(
+            "5,5,5,5,5"
+        );
+
+        Dictionary<Category, int> shouldBeOnesFoursAndFourOfAKind = CategoriesWithHighestPoints(
+            "4,1,1,1,1",
+            new Category[] { Category.chance }
+        );
+
+        Assert.IsTrue(
+            shouldBeFivesAndChance.ContainsKey(Category.fives) &&
+            shouldBeFivesAndChance.ContainsKey(Category.chance) &&
+            shouldBeFivesAndChance.All(item => item.Value == 25) &&
+            shouldBeFivesAndChance.Count == 2
+        );
+
+        Assert.IsTrue(
+            shouldBeYatzy.ContainsKey(Category.yatzy) &&
+            shouldBeYatzy.All(item => item.Value == 50) &&
+            shouldBeYatzy.Count == 1
+        );
+
+        Assert.IsTrue(
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.ones) &&
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.fours) &&
+            shouldBeOnesFoursAndFourOfAKind.ContainsKey(Category.four_of_a_kind) &&
+            shouldBeOnesFoursAndFourOfAKind.All(item => item.Value == 4) &&
+            shouldBeOnesFoursAndFourOfAKind.Count == 3
+        );
     }
 }

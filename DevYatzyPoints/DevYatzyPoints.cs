@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,7 +10,7 @@ namespace DevYatzyPoints;
 
 public class DevYatzyPoints
 {
-    enum Category
+    public enum Category
     {
         ones = 1,
         twos,
@@ -29,28 +30,67 @@ public class DevYatzyPoints
         yatzy
     }
 
-    enum XOfAKind
+    private enum XOfAKind
     {
         three = 3,
         four = 4,
     }
 
-    enum Straight
+    private enum Straight
     {
         small = 15,
         big = 20,
     }
 
-    public static int points(string eyes, string category)
+    public static Dictionary<Category, int> CategoriesWithHighestPoints(
+        string eyes, 
+        Category[]? excludeCategories = null
+    )
     {
-        Enum.TryParse(category.ToLower(), out Category enumCategory);
+        try
+        {
+            excludeCategories = excludeCategories ?? Array.Empty<Category>();
 
+            Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+
+            // iterates through all categories
+            foreach (int i in Enum.GetValues(typeof(Category)))
+            {
+                // to get currentCategory
+                string? categoryName = Enum.GetName(typeof(Category), i);
+                Enum.TryParse(categoryName, out Category currentCategory);
+
+                if (excludeCategories.Contains(currentCategory)) continue;
+
+                int currentPoints = Points(eyes, currentCategory);
+
+                scoreTable.Add(currentCategory, currentPoints);
+            }
+
+            int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
+
+            return scoreTable
+                .Where(pair => pair.Value == highestPoints)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+        catch
+        {
+            throw new Exception("Please make sure input is valid");
+        }
+    }
+
+    public static int Points(string eyes, Category category)
+    {
         // removes any whitespaces
         eyes = Regex.Replace(eyes, @"\s+", "");
 
         // TODO validate input
 
-        switch (enumCategory)
+        // TODO use category enum not strings
+        // TODO I split eyes in almost all, do here instead
+        // functions can choose string or array
+
+        switch (category)
         {
             case Category.ones:
             case Category.twos:
@@ -58,7 +98,7 @@ public class DevYatzyPoints
             case Category.fours:
             case Category.fives:
             case Category.sixes:
-                return pointsForOnesToSixes(eyes, enumCategory);
+                return pointsForOnesToSixes(eyes, category);
 
             case Category.pair:
                 return pointsForPair(eyes);
@@ -86,7 +126,7 @@ public class DevYatzyPoints
                 return pointsForYatzy(eyes);
 
             default:
-                throw new Exception("Category string is not valid");
+                throw new Exception("Please make sure input is valid");
         }
     }
 
