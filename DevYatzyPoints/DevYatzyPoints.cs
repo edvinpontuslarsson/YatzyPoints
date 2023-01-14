@@ -44,13 +44,16 @@ public class DevYatzyPoints
 
     public static Category WhichCategoryGivesMostPoints(
         string eyes, 
-        Category[] excludeCategories
+        Category[]? excludeCategories = null
     )
     {
         try
         {
+            excludeCategories = excludeCategories ?? Array.Empty<Category>();
+
             Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
 
+            // iterates through all categories
             foreach (int i in Enum.GetValues(typeof(Category)))
             {
                 // to get currentCategory
