@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static DevYatzyPoints.DevYatzyPoints;
 
 namespace DevYatzyPoints;
 
@@ -43,7 +42,7 @@ public class DevYatzyPoints
         big = 20,
     }
 
-    public static Category whichCategoryGivesMostPoints(
+    public static Category WhichCategoryGivesMostPoints(
         string eyes, 
         Category[] excludeCategories
     )
@@ -53,15 +52,18 @@ public class DevYatzyPoints
             // for category in catetegories - excludeCategories:
             //     points(eyes, category)
 
+            Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+
             foreach (int i in Enum.GetValues(typeof(Category)))
             {
                 string? categoryName = Enum.GetName(typeof(Category), i);
-                Enum.TryParse(categoryName, out Category currentEnum);
+                Enum.TryParse(categoryName, out Category currentCategory);
 
-                if (excludeCategories.Contains(currentEnum))
-                {
-                    continue;
-                }
+                if (excludeCategories.Contains(currentCategory)) continue;
+
+                // TODO rename method to capitol Points, make it use category
+
+                // scoreTable.Add(currentEnum, points);
             }
 
             return Category.big_straight;
@@ -72,10 +74,8 @@ public class DevYatzyPoints
         }
     }
 
-    public static int points(string eyes, string category)
+    public static int Points(string eyes, Category category)
     {
-        Enum.TryParse(category.ToLower(), out Category enumCategory);
-
         // removes any whitespaces
         eyes = Regex.Replace(eyes, @"\s+", "");
 
@@ -85,7 +85,7 @@ public class DevYatzyPoints
         // TODO I split eyes in almost all, do here instead
         // functions can choose string or array
 
-        switch (enumCategory)
+        switch (category)
         {
             case Category.ones:
             case Category.twos:
@@ -93,7 +93,7 @@ public class DevYatzyPoints
             case Category.fours:
             case Category.fives:
             case Category.sixes:
-                return pointsForOnesToSixes(eyes, enumCategory);
+                return pointsForOnesToSixes(eyes, category);
 
             case Category.pair:
                 return pointsForPair(eyes);
