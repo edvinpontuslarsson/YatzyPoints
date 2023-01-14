@@ -164,5 +164,11 @@ public class TestYatzyPoints
             shouldBeFives.All(item => item.Value == 25) &&
             shouldBeFives.Count == 2
         );
+
+        Assert.IsTrue(
+            shouldBeYatzy.ContainsKey(Category.yatzy) &&
+            shouldBeYatzy.All(item => item.Value == 50) &&
+            shouldBeYatzy.Count == 1
+        );
     }
 }
