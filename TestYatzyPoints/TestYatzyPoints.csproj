@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevYatzyPoints\DevYatzyPoints.csproj" />
     <ProjectReference Include="..\YatzyPoints\YatzyPoints.csproj" />
   </ItemGroup>
 
