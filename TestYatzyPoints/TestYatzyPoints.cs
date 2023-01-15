@@ -1,19 +1,10 @@
 namespace TestYatzyPoints;
 
-using YatzyPoints;
-using static DevYatzyPoints.DevYatzyPoints;
+using static YatzyPoints.YatzyPoints;
 
 [TestClass]
 public class TestYatzyPoints
 {
-    [TestMethod]
-    public void TestPingPongs()
-    {
-        string result = YatzyPoengberegning.ping();
-        Assert.AreEqual(result, "pong");
-        Assert.AreNotEqual(result, "random");
-    }
-
     [TestMethod]
     public void TestValidatesEyes()
     {
