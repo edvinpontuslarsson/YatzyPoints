@@ -15,6 +15,22 @@ public class TestYatzyPoints
     }
 
     [TestMethod]
+    public void TestValidatesEyes()
+    {
+        // 5 valid eyes
+        int result = Points("1,2,3,4,5", Category.ones);
+        Assert.AreEqual(result, 1);
+
+        try
+        {
+            // more than 5 eyes
+            Points("1,2,3,4,5,6", Category.ones);
+            Assert.Fail();
+        }
+        catch {}
+    }
+
+    [TestMethod]
     public void TestPointsOnesToSixes()
     {
         int one = Points("1, 2, 2, 2, 2", Category.ones);

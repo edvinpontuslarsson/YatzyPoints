@@ -8,8 +8,7 @@ class Program
     {
         // TODO debug here and copy for test
 
-        Dictionary<Category, int> highest = CategoriesWithHighestPoints("1,1,1,1,4",
-            new Category[] { Category.chance });
-        Console.WriteLine(highest.ToString());
+        int points = Points("1,2,3,4,5,6", Category.ones);
+        Console.WriteLine(points);
     }
 }
