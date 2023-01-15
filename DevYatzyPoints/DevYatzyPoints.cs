@@ -79,7 +79,7 @@ public class DevYatzyPoints
         // removes any whitespaces
         eyes = Regex.Replace(eyes, @"\s+", "");
 
-        // TODO validate input
+        if (!AreEyesValid(eyes)) throw new Exception("Dice eyes are not valid");
 
         switch (category)
         {
@@ -119,6 +119,24 @@ public class DevYatzyPoints
             default:
                 throw new Exception("Please make sure input is valid");
         }
+    }
+
+    private static bool AreEyesValid(string eyes)
+    {
+        string[] justEyes = eyes.Split(',');
+
+        if (justEyes.Length != 5) return false;
+
+        foreach (string eye in justEyes)
+        {
+            int numericEye;
+            bool isNumeric = int.TryParse(eye, out numericEye);
+
+            if (!isNumeric) return false;
+            if (numericEye < 1 || numericEye > 6) return false;
+        }
+
+        return true;
     }
 
     private static int pointsForOnesToSixes(string eyes, Category enumCategory)

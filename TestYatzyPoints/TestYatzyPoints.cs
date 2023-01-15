@@ -15,6 +15,62 @@ public class TestYatzyPoints
     }
 
     [TestMethod]
+    public void TestValidatesEyes()
+    {
+        // 5 valid eyes
+        int result = Points("1,2,3,4,5", Category.ones);
+        Assert.AreEqual(result, 1);
+
+        // more than 5 eyes
+        try
+        {
+            Points("1,2,3,4,5,6", Category.ones);
+            Assert.Fail();
+        }
+        catch {}
+
+        // one item is not numeric
+        try
+        {
+            Points("1,2,3,4,s", Category.ones);
+            Assert.Fail();
+        }
+        catch { }
+
+        // one eye is 0
+        try
+        {
+            Points("0,1,2,3,4", Category.ones);
+            Assert.Fail();
+        }
+        catch { }
+
+        // one eye is 7
+        try
+        {
+            Points("3,4,5,6,7", Category.ones);
+            Assert.Fail();
+        }
+        catch { }
+
+        // one eye is 11
+        try
+        {
+            Points("11,2,3,4,5", Category.ones);
+            Assert.Fail();
+        }
+        catch { }
+
+        // one eye is -1
+        try
+        {
+            Points("-1,2,3,4,5", Category.ones);
+            Assert.Fail();
+        }
+        catch { }
+    }
+
+    [TestMethod]
     public void TestPointsOnesToSixes()
     {
         int one = Points("1, 2, 2, 2, 2", Category.ones);
