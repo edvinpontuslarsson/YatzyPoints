@@ -2,7 +2,7 @@
 
 internal static class Helper
 {
-    /// <returns>Numeric combined value of all dice eyes</returns>
+    /// <returns>Combined value of all dice eyes</returns>
     internal static int SumOfEyes(string eyes)
     {
         int sum = 0;
@@ -18,7 +18,7 @@ internal static class Helper
     }
 
     /// <returns>
-    /// Numeric dice eye values that occur multiple times in the string parameter eyes
+    /// Dice eye values that occur multiple times in the string parameter eyes
     /// </returns>
     internal static List<int> Duplicates(string eyes)
     {
@@ -47,7 +47,7 @@ internal static class Helper
 
     /// <returns>
     /// Dictionary/Frequency table where:
-    /// Key is the numeric representation of each occuring dice eye
+    /// Key is the representation of each occuring dice eye
     /// Value represents the amount of dices with that value
     /// </returns>
     internal static Dictionary<int, int> FrequencyTable(string eyes)

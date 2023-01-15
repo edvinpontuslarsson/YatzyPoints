@@ -6,6 +6,9 @@ using static Helper;
 
 public class YatzyPoints
 {
+    /// <summary>
+    /// Possible categories to use for getting the points of a dice throw
+    /// </summary>
     public enum Category
     {
         ones = 1,
@@ -26,55 +29,85 @@ public class YatzyPoints
         yatzy
     }
 
+    /// <summary>
+    /// to calculate three_of_a_kind and four_of_a_kind the same private method
+    /// is used, this enum is used to tell that method which category to use
+    /// </summary>
     private enum XOfAKind
     {
         three = 3,
         four = 4,
     }
 
+    /// <summary>
+    /// To tell the method calculating points for straights which straight
+    /// category to use
+    /// </summary>
     private enum Straight
     {
         small = 15,
         big = 20,
     }
 
+    /// <summary>
+    /// You can use this to get the highest scoring category/categories along
+    /// with the amount of points.
+    /// 
+    /// The string parameter eyes needs to consist of numeric characters 1-6
+    /// separated with commas, space characters will be ignored so they can be
+    /// included or omitted as you wish. 2 examples of valid inputs for the 
+    /// string eyes are "1,2,3,4,5" and "2, 3, 4, 5, 6". Exception will be 
+    /// thrown if the string eyes is not valid.
+    /// 
+    /// excludeCategories is and optional parameter, you can use it to 
+    /// exclude categories even if they happen to give the highest points. This
+    /// method will then return the categories with the highest points after
+    /// those.
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     public static Dictionary<Category, int> CategoriesWithHighestPoints(
         string eyes,
         Category[]? excludeCategories = null
     )
     {
-        try
+        excludeCategories = excludeCategories ?? Array.Empty<Category>();
+
+        Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+
+        // iterates through all categories
+        foreach (int i in Enum.GetValues(typeof(Category)))
         {
-            excludeCategories = excludeCategories ?? Array.Empty<Category>();
+            // to get currentCategory
+            string? categoryName = Enum.GetName(typeof(Category), i);
+            Enum.TryParse(categoryName, out Category currentCategory);
 
-            Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+            if (excludeCategories.Contains(currentCategory)) continue;
 
-            // iterates through all categories
-            foreach (int i in Enum.GetValues(typeof(Category)))
-            {
-                // to get currentCategory
-                string? categoryName = Enum.GetName(typeof(Category), i);
-                Enum.TryParse(categoryName, out Category currentCategory);
+            int currentPoints = Points(eyes, currentCategory);
 
-                if (excludeCategories.Contains(currentCategory)) continue;
-
-                int currentPoints = Points(eyes, currentCategory);
-
-                scoreTable.Add(currentCategory, currentPoints);
-            }
-
-            int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
-
-            return scoreTable
-                .Where(pair => pair.Value == highestPoints)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            scoreTable.Add(currentCategory, currentPoints);
         }
-        catch
-        {
-            throw new Exception("Please make sure input is valid");
-        }
+
+        int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
+
+        return scoreTable
+            .Where(pair => pair.Value == highestPoints)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 
+    /// <summary>
+    /// You can use this method to get the yatzy points for 5 dice eyes given
+    /// the chosen category.
+    /// 
+    /// The string parameter eyes needs to consist of numeric characters 1-6
+    /// separated with commas, space characters will be ignored so they can be
+    /// included or omitted as you wish. 2 examples of valid inputs for the 
+    /// string eyes are "1,2,3,4,5" and "2, 3, 4, 5, 6". Exception will be 
+    /// thrown if the string eyes is not valid.
+    /// </summary>
+    /// <param name="eyes"></param>
+    /// <param name="category"></param>
+    /// <exception cref="Exception"></exception>
     public static int Points(string eyes, Category category)
     {
         // removes any whitespaces
