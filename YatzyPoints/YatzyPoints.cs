@@ -2,6 +2,8 @@
 
 namespace YatzyPoints;
 
+using static Helper;
+
 public class YatzyPoints
 {
     public enum Category
@@ -232,67 +234,5 @@ public class YatzyPoints
         if (!allSame) return 0;
 
         return 50;
-    }
-
-    private static int SumOfEyes(string eyes)
-    {
-        int sum = 0;
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string eye in justEyes)
-        {
-            sum += int.Parse(eye);
-        }
-
-        return sum;
-    }
-
-    private static List<int> Duplicates(string eyes)
-    {
-        List<int> duplicates = new List<int>();
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string character in justEyes)
-        {
-            int value = int.Parse(character);
-
-            if (duplicates.Contains(value)) continue;
-
-            int indexOfFirstOccurance = eyes.IndexOf(character);
-            int indexOfLastOccurance = eyes.LastIndexOf(character);
-
-            // if first and last index isn't the same, it occurs more than once
-            if (indexOfFirstOccurance != indexOfLastOccurance)
-            {
-                duplicates.Add(value);
-            }
-        }
-
-        return duplicates;
-    }
-
-    private static Dictionary<int, int> FrequencyTable(string eyes)
-    {
-        string[] justEyes = eyes.Split(',');
-
-        Dictionary<int, int> frequencyTable = new Dictionary<int, int>();
-
-        foreach (string eye in justEyes)
-        {
-            int numericEye = int.Parse(eye);
-
-            if (frequencyTable.ContainsKey(numericEye))
-            {
-                frequencyTable[numericEye] += 1;
-            }
-            else
-            {
-                frequencyTable[numericEye] = 1;
-            }
-        }
-
-        return frequencyTable;
     }
 }
