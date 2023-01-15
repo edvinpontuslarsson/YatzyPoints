@@ -2,8 +2,13 @@
 
 namespace YatzyPoints;
 
+using static Helper;
+
 public class YatzyPoints
 {
+    /// <summary>
+    /// Possible categories to use for getting the points of a dice throw
+    /// </summary>
     public enum Category
     {
         ones = 1,
@@ -24,55 +29,85 @@ public class YatzyPoints
         yatzy
     }
 
+    /// <summary>
+    /// to calculate three_of_a_kind and four_of_a_kind the same private method
+    /// is used, this enum is used to tell that method which category to use
+    /// </summary>
     private enum XOfAKind
     {
         three = 3,
         four = 4,
     }
 
+    /// <summary>
+    /// To tell the method calculating points for straights which straight
+    /// category to use
+    /// </summary>
     private enum Straight
     {
         small = 15,
         big = 20,
     }
 
+    /// <summary>
+    /// You can use this to get the highest scoring category/categories along
+    /// with the amount of points.
+    /// 
+    /// The string parameter eyes needs to consist of numeric characters 1-6
+    /// separated with commas, space characters will be ignored so they can be
+    /// included or omitted as you wish. 2 examples of valid inputs for the 
+    /// string eyes are "1,2,3,4,5" and "2, 3, 4, 5, 6". Exception will be 
+    /// thrown if the string eyes is not valid.
+    /// 
+    /// excludeCategories is and optional parameter, you can use it to 
+    /// exclude categories even if they happen to give the highest points. This
+    /// method will then return the categories with the highest points after
+    /// those.
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     public static Dictionary<Category, int> CategoriesWithHighestPoints(
         string eyes,
         Category[]? excludeCategories = null
     )
     {
-        try
+        excludeCategories = excludeCategories ?? Array.Empty<Category>();
+
+        Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+
+        // iterates through all categories
+        foreach (int i in Enum.GetValues(typeof(Category)))
         {
-            excludeCategories = excludeCategories ?? Array.Empty<Category>();
+            // to get currentCategory
+            string? categoryName = Enum.GetName(typeof(Category), i);
+            Enum.TryParse(categoryName, out Category currentCategory);
 
-            Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+            if (excludeCategories.Contains(currentCategory)) continue;
 
-            // iterates through all categories
-            foreach (int i in Enum.GetValues(typeof(Category)))
-            {
-                // to get currentCategory
-                string? categoryName = Enum.GetName(typeof(Category), i);
-                Enum.TryParse(categoryName, out Category currentCategory);
+            int currentPoints = Points(eyes, currentCategory);
 
-                if (excludeCategories.Contains(currentCategory)) continue;
-
-                int currentPoints = Points(eyes, currentCategory);
-
-                scoreTable.Add(currentCategory, currentPoints);
-            }
-
-            int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
-
-            return scoreTable
-                .Where(pair => pair.Value == highestPoints)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            scoreTable.Add(currentCategory, currentPoints);
         }
-        catch
-        {
-            throw new Exception("Please make sure input is valid");
-        }
+
+        int highestPoints = scoreTable.MaxBy(row => row.Value).Value;
+
+        return scoreTable
+            .Where(pair => pair.Value == highestPoints)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 
+    /// <summary>
+    /// You can use this method to get the yatzy points for 5 dice eyes given
+    /// the chosen category.
+    /// 
+    /// The string parameter eyes needs to consist of numeric characters 1-6
+    /// separated with commas, space characters will be ignored so they can be
+    /// included or omitted as you wish. 2 examples of valid inputs for the 
+    /// string eyes are "1,2,3,4,5" and "2, 3, 4, 5, 6". Exception will be 
+    /// thrown if the string eyes is not valid.
+    /// </summary>
+    /// <param name="eyes"></param>
+    /// <param name="category"></param>
+    /// <exception cref="Exception"></exception>
     public static int Points(string eyes, Category category)
     {
         // removes any whitespaces
@@ -88,32 +123,32 @@ public class YatzyPoints
             case Category.fours:
             case Category.fives:
             case Category.sixes:
-                return pointsForOnesToSixes(eyes, category);
+                return PointsForOnesToSixes(eyes, category);
 
             case Category.pair:
-                return pointsForPair(eyes);
+                return PointsForPair(eyes);
 
             case Category.two_pair:
-                return pointsForTwoPair(eyes);
+                return PointsForTwoPair(eyes);
 
             case Category.three_of_a_kind:
-                return pointsForXOfAKind(eyes, XOfAKind.three);
+                return PointsForXOfAKind(eyes, XOfAKind.three);
             case Category.four_of_a_kind:
-                return pointsForXOfAKind(eyes, XOfAKind.four);
+                return PointsForXOfAKind(eyes, XOfAKind.four);
 
             case Category.small_straight:
-                return pointsForStraight(eyes, Straight.small);
+                return PointsForStraight(eyes, Straight.small);
             case Category.big_straight:
-                return pointsForStraight(eyes, Straight.big);
+                return PointsForStraight(eyes, Straight.big);
 
             case Category.full_house:
-                return pointsForFullHouse(eyes);
+                return PointsForFullHouse(eyes);
 
             case Category.chance:
-                return pointsForChance(eyes);
+                return PointsForChance(eyes);
 
             case Category.yatzy:
-                return pointsForYatzy(eyes);
+                return PointsForYatzy(eyes);
 
             default:
                 throw new Exception("Please make sure input is valid");
@@ -138,7 +173,7 @@ public class YatzyPoints
         return true;
     }
 
-    private static int pointsForOnesToSixes(string eyes, Category enumCategory)
+    private static int PointsForOnesToSixes(string eyes, Category enumCategory)
     {
         int categoryValue = (int)enumCategory;
         char search = char.Parse(categoryValue.ToString());
@@ -148,7 +183,7 @@ public class YatzyPoints
         return occuranceAmount * categoryValue;
     }
 
-    private static int pointsForPair(string eyes)
+    private static int PointsForPair(string eyes)
     {
         List<int> duplicates = Duplicates(eyes);
 
@@ -159,7 +194,7 @@ public class YatzyPoints
         return maxValue * 2;
     }
 
-    private static int pointsForTwoPair(string eyes)
+    private static int PointsForTwoPair(string eyes)
     {
         List<int> duplicates = Duplicates(eyes);
 
@@ -173,7 +208,7 @@ public class YatzyPoints
         return sumOfPairs;
     }
 
-    private static int pointsForXOfAKind(string eyes, XOfAKind xOfAKind)
+    private static int PointsForXOfAKind(string eyes, XOfAKind xOfAKind)
     {
         // x is 3 or 4
         int x = (int)xOfAKind;
@@ -190,7 +225,7 @@ public class YatzyPoints
         return 0;
     }
 
-    private static int pointsForStraight(string eyes, Straight straight)
+    private static int PointsForStraight(string eyes, Straight straight)
     {
         int sum = SumOfEyes(eyes);
 
@@ -200,7 +235,7 @@ public class YatzyPoints
         return sum;
     }
 
-    private static int pointsForFullHouse(string eyes)
+    private static int PointsForFullHouse(string eyes)
     {
         Dictionary<int, int> frequencyTable = FrequencyTable(eyes);
 
@@ -219,9 +254,9 @@ public class YatzyPoints
         return sum;
     }
 
-    private static int pointsForChance(string eyes) => SumOfEyes(eyes);
+    private static int PointsForChance(string eyes) => SumOfEyes(eyes);
 
-    private static int pointsForYatzy(string eyes)
+    private static int PointsForYatzy(string eyes)
     {
         string[] justEyes = eyes.Split(',');
         string firstEye = justEyes[0];
@@ -232,67 +267,5 @@ public class YatzyPoints
         if (!allSame) return 0;
 
         return 50;
-    }
-
-    private static int SumOfEyes(string eyes)
-    {
-        int sum = 0;
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string eye in justEyes)
-        {
-            sum += int.Parse(eye);
-        }
-
-        return sum;
-    }
-
-    private static List<int> Duplicates(string eyes)
-    {
-        List<int> duplicates = new List<int>();
-
-        string[] justEyes = eyes.Split(',');
-
-        foreach (string character in justEyes)
-        {
-            int value = int.Parse(character);
-
-            if (duplicates.Contains(value)) continue;
-
-            int indexOfFirstOccurance = eyes.IndexOf(character);
-            int indexOfLastOccurance = eyes.LastIndexOf(character);
-
-            // if first and last index isn't the same, it occurs more than once
-            if (indexOfFirstOccurance != indexOfLastOccurance)
-            {
-                duplicates.Add(value);
-            }
-        }
-
-        return duplicates;
-    }
-
-    private static Dictionary<int, int> FrequencyTable(string eyes)
-    {
-        string[] justEyes = eyes.Split(',');
-
-        Dictionary<int, int> frequencyTable = new Dictionary<int, int>();
-
-        foreach (string eye in justEyes)
-        {
-            int numericEye = int.Parse(eye);
-
-            if (frequencyTable.ContainsKey(numericEye))
-            {
-                frequencyTable[numericEye] += 1;
-            }
-            else
-            {
-                frequencyTable[numericEye] = 1;
-            }
-        }
-
-        return frequencyTable;
     }
 }
