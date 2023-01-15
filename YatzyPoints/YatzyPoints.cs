@@ -9,7 +9,7 @@ public class YatzyPoints
     /// <summary>
     /// Possible categories to use for getting the points of a dice throw
     /// </summary>
-    public enum Category
+    public enum Categories
     {
         ones = 1,
         twos,
@@ -33,7 +33,7 @@ public class YatzyPoints
     /// to calculate three_of_a_kind and four_of_a_kind the same private method
     /// is used, this enum is used to tell that method which category to use
     /// </summary>
-    private enum XOfAKind
+    private enum XOfAKindVariants
     {
         three = 3,
         four = 4,
@@ -43,7 +43,7 @@ public class YatzyPoints
     /// To tell the method calculating points for straights which straight
     /// category to use
     /// </summary>
-    private enum Straight
+    private enum Straights
     {
         small = 15,
         big = 20,
@@ -65,21 +65,21 @@ public class YatzyPoints
     /// those.
     /// </summary>
     /// <exception cref="Exception"></exception>
-    public static Dictionary<Category, int> CategoriesWithHighestPoints(
+    public static Dictionary<Categories, int> CategoriesWithHighestPoints(
         string eyes,
-        Category[]? excludeCategories = null
+        Categories[]? excludeCategories = null
     )
     {
-        excludeCategories = excludeCategories ?? Array.Empty<Category>();
+        excludeCategories = excludeCategories ?? Array.Empty<Categories>();
 
-        Dictionary<Category, int> scoreTable = new Dictionary<Category, int>();
+        Dictionary<Categories, int> scoreTable = new Dictionary<Categories, int>();
 
         // iterates through all categories
-        foreach (int i in Enum.GetValues(typeof(Category)))
+        foreach (int i in Enum.GetValues(typeof(Categories)))
         {
             // to get currentCategory
-            string? categoryName = Enum.GetName(typeof(Category), i);
-            Enum.TryParse(categoryName, out Category currentCategory);
+            string? categoryName = Enum.GetName(typeof(Categories), i);
+            Enum.TryParse(categoryName, out Categories currentCategory);
 
             if (excludeCategories.Contains(currentCategory)) continue;
 
@@ -108,7 +108,7 @@ public class YatzyPoints
     /// <param name="eyes"></param>
     /// <param name="category"></param>
     /// <exception cref="Exception"></exception>
-    public static int Points(string eyes, Category category)
+    public static int Points(string eyes, Categories category)
     {
         // removes any whitespaces
         eyes = Regex.Replace(eyes, @"\s+", "");
@@ -117,37 +117,37 @@ public class YatzyPoints
 
         switch (category)
         {
-            case Category.ones:
-            case Category.twos:
-            case Category.threes:
-            case Category.fours:
-            case Category.fives:
-            case Category.sixes:
+            case Categories.ones:
+            case Categories.twos:
+            case Categories.threes:
+            case Categories.fours:
+            case Categories.fives:
+            case Categories.sixes:
                 return PointsForOnesToSixes(eyes, category);
 
-            case Category.pair:
+            case Categories.pair:
                 return PointsForPair(eyes);
 
-            case Category.two_pair:
+            case Categories.two_pair:
                 return PointsForTwoPair(eyes);
 
-            case Category.three_of_a_kind:
-                return PointsForXOfAKind(eyes, XOfAKind.three);
-            case Category.four_of_a_kind:
-                return PointsForXOfAKind(eyes, XOfAKind.four);
+            case Categories.three_of_a_kind:
+                return PointsForXOfAKind(eyes, XOfAKindVariants.three);
+            case Categories.four_of_a_kind:
+                return PointsForXOfAKind(eyes, XOfAKindVariants.four);
 
-            case Category.small_straight:
-                return PointsForStraight(eyes, Straight.small);
-            case Category.big_straight:
-                return PointsForStraight(eyes, Straight.big);
+            case Categories.small_straight:
+                return PointsForStraight(eyes, Straights.small);
+            case Categories.big_straight:
+                return PointsForStraight(eyes, Straights.big);
 
-            case Category.full_house:
+            case Categories.full_house:
                 return PointsForFullHouse(eyes);
 
-            case Category.chance:
+            case Categories.chance:
                 return PointsForChance(eyes);
 
-            case Category.yatzy:
+            case Categories.yatzy:
                 return PointsForYatzy(eyes);
 
             default:
@@ -173,7 +173,7 @@ public class YatzyPoints
         return true;
     }
 
-    private static int PointsForOnesToSixes(string eyes, Category enumCategory)
+    private static int PointsForOnesToSixes(string eyes, Categories enumCategory)
     {
         int categoryValue = (int)enumCategory;
         char search = char.Parse(categoryValue.ToString());
@@ -208,7 +208,7 @@ public class YatzyPoints
         return sumOfPairs;
     }
 
-    private static int PointsForXOfAKind(string eyes, XOfAKind xOfAKind)
+    private static int PointsForXOfAKind(string eyes, XOfAKindVariants xOfAKind)
     {
         // x is 3 or 4
         int x = (int)xOfAKind;
@@ -225,7 +225,7 @@ public class YatzyPoints
         return 0;
     }
 
-    private static int PointsForStraight(string eyes, Straight straight)
+    private static int PointsForStraight(string eyes, Straights straight)
     {
         int sum = SumOfEyes(eyes);
 
