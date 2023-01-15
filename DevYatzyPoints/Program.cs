@@ -8,7 +8,9 @@ class Program
     {
         // TODO debug here and copy for test
 
-        int points = Points("1,2,3,4,5,6", Category.ones);
-        Console.WriteLine(points);
+        // int points = Points("1,2,3,4,5,6", Category.ones);
+        // Console.WriteLine(points);
+
+        Console.WriteLine("Hello");
     }
 }
