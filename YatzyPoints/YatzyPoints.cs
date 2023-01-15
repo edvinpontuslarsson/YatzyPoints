@@ -88,32 +88,32 @@ public class YatzyPoints
             case Category.fours:
             case Category.fives:
             case Category.sixes:
-                return pointsForOnesToSixes(eyes, category);
+                return PointsForOnesToSixes(eyes, category);
 
             case Category.pair:
-                return pointsForPair(eyes);
+                return PointsForPair(eyes);
 
             case Category.two_pair:
-                return pointsForTwoPair(eyes);
+                return PointsForTwoPair(eyes);
 
             case Category.three_of_a_kind:
-                return pointsForXOfAKind(eyes, XOfAKind.three);
+                return PointsForXOfAKind(eyes, XOfAKind.three);
             case Category.four_of_a_kind:
-                return pointsForXOfAKind(eyes, XOfAKind.four);
+                return PointsForXOfAKind(eyes, XOfAKind.four);
 
             case Category.small_straight:
-                return pointsForStraight(eyes, Straight.small);
+                return PointsForStraight(eyes, Straight.small);
             case Category.big_straight:
-                return pointsForStraight(eyes, Straight.big);
+                return PointsForStraight(eyes, Straight.big);
 
             case Category.full_house:
-                return pointsForFullHouse(eyes);
+                return PointsForFullHouse(eyes);
 
             case Category.chance:
-                return pointsForChance(eyes);
+                return PointsForChance(eyes);
 
             case Category.yatzy:
-                return pointsForYatzy(eyes);
+                return PointsForYatzy(eyes);
 
             default:
                 throw new Exception("Please make sure input is valid");
@@ -138,7 +138,7 @@ public class YatzyPoints
         return true;
     }
 
-    private static int pointsForOnesToSixes(string eyes, Category enumCategory)
+    private static int PointsForOnesToSixes(string eyes, Category enumCategory)
     {
         int categoryValue = (int)enumCategory;
         char search = char.Parse(categoryValue.ToString());
@@ -148,7 +148,7 @@ public class YatzyPoints
         return occuranceAmount * categoryValue;
     }
 
-    private static int pointsForPair(string eyes)
+    private static int PointsForPair(string eyes)
     {
         List<int> duplicates = Duplicates(eyes);
 
@@ -159,7 +159,7 @@ public class YatzyPoints
         return maxValue * 2;
     }
 
-    private static int pointsForTwoPair(string eyes)
+    private static int PointsForTwoPair(string eyes)
     {
         List<int> duplicates = Duplicates(eyes);
 
@@ -173,7 +173,7 @@ public class YatzyPoints
         return sumOfPairs;
     }
 
-    private static int pointsForXOfAKind(string eyes, XOfAKind xOfAKind)
+    private static int PointsForXOfAKind(string eyes, XOfAKind xOfAKind)
     {
         // x is 3 or 4
         int x = (int)xOfAKind;
@@ -190,7 +190,7 @@ public class YatzyPoints
         return 0;
     }
 
-    private static int pointsForStraight(string eyes, Straight straight)
+    private static int PointsForStraight(string eyes, Straight straight)
     {
         int sum = SumOfEyes(eyes);
 
@@ -200,7 +200,7 @@ public class YatzyPoints
         return sum;
     }
 
-    private static int pointsForFullHouse(string eyes)
+    private static int PointsForFullHouse(string eyes)
     {
         Dictionary<int, int> frequencyTable = FrequencyTable(eyes);
 
@@ -219,9 +219,9 @@ public class YatzyPoints
         return sum;
     }
 
-    private static int pointsForChance(string eyes) => SumOfEyes(eyes);
+    private static int PointsForChance(string eyes) => SumOfEyes(eyes);
 
-    private static int pointsForYatzy(string eyes)
+    private static int PointsForYatzy(string eyes)
     {
         string[] justEyes = eyes.Split(',');
         string firstEye = justEyes[0];
